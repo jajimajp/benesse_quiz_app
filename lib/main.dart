@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ui/home.dart';
+// import 'ui/home.dart';
+import 'ui/quiz.dart';
 
 // void main() {
 //   runApp(ScaffoldExample());
@@ -7,6 +8,6 @@ import 'ui/home.dart';
 
 void main() {
   runApp(new MaterialApp(
-    home: MovieListView(),
+    home: QuizApp(),
   ));
 }
