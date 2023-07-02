@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:first_flutter_app/model/question.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-const apiEndpoint = 'https://example.com';
+const apiEndpoint = 'http://localhost:3000';
 
 List<Question> parseQuestions(Map<String, dynamic> json) {
   final questionsJson = json['questions'] as List<dynamic>;
@@ -33,15 +34,19 @@ Future<List<Question>> fetchQuestions(Difficulty difficulty) async {
   final diffStr = getDifficultyString(difficulty);
   try {
     final response = await http
-        .get(Uri.parse('$apiEndpoint/questions/$diffStr'))
-        .timeout(const Duration(milliseconds: 100));
+        .get(Uri.parse('$apiEndpoint/questions/$diffStr'));
+        // .timeout(const Duration(milliseconds: 100));
+    debugPrint(response.body);
     if (response.statusCode == 200) {
       // リクエスト成功時
+      debugPrint("y");
       return parseQuestions(jsonDecode(response.body));
     } else {
+      debugPrint("n");
       throw Exception('データ取得に失敗しました');
     }
   } catch (e) {
+    debugPrint(e.toString());;
     // TODO: サーバの代わりに仮の値を返す
     // TODO: バックエンドが実装できたら削除する
     return [
