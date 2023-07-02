@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:first_flutter_app/util/requests.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:first_flutter_app/model/question.dart';
 import 'package:flutter/material.dart';
@@ -144,6 +143,40 @@ class _QuizAppState extends State<QuizApp> {
             ),
           );
         });
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: isCorrect ? const Text("正解") : const Text("不正解"),
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: quizImage(answerImageURL),
+              ),
+              const Spacer(),
+              Expanded(
+              child: (() { // 関数を使う
+                if (_questioncount == questionBank.length) {
+                  return TextButton(onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Quizresult(param:"$_score"),
+                      )
+                    );
+                  }, child: const Text("結果"),
+                  );
+                } else {
+                  return TextButton(onPressed: () {
+                    Navigator.of(context).pop();
+                  }, child: const Text("次の問題へ"),
+                  );
+                }
+              })(),
+              ),
+            ],
+          ),
+        );
+      }
+    );
   }
 
   _updateQuestion() async {
