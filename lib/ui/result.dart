@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import './quiz.dart';
 import 'package:first_flutter_app/ui/difficultyList.dart';
 
@@ -8,30 +9,29 @@ class Quizresult extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-            "Result",
-            style:TextStyle(
-                fontSize:40,
-                color: Colors.white,
-                fontWeight: FontWeight.w800,
-            )),
-        centerTitle: true,
-        backgroundColor: Colors.purple,
-        shape: RoundedRectangleBorder( ///形変える
-          borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
-        ),),
-      ),
       backgroundColor: Colors.yellow,
       body: SafeArea(
         child: Column(
           children:[
+           Container(
+             width:400,
+             padding: EdgeInsets.only(left: 0),
+             child: const Text(
+                 "Result",
+                 textAlign: TextAlign.center,
+                 style:TextStyle(
+                   fontSize:40,
+                   color: Colors.white,
+                   fontWeight: FontWeight.w800,
+                 )),
+          decoration: BoxDecoration(
+            color: Colors.purple,
+            borderRadius: BorderRadius.circular(30),
+          ),),
             ///得点部分
             Container(
               width: 400,
-              height: 500,
+              height: 400,
 
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(left:30,top: 50,right: 30,bottom: 50),
