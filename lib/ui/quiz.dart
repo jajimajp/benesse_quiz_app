@@ -1,5 +1,7 @@
 import 'dart:async';
 
+
+import 'package:first_flutter_app/ui/result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:first_flutter_app/model/question.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ class QuizApp extends StatefulWidget {
 class _QuizAppState extends State<QuizApp> {
   int _currentQuestionIndex = 0;
   int _score = 0;
+  int _questioncount=0;
 
   List<Question> questionBank = [
     Question.name(AnswerOption.A, 'https://placehold.jp/150x150.png', 'https://placehold.jp/150x150.png'),
@@ -79,10 +82,15 @@ class _QuizAppState extends State<QuizApp> {
   }
 
   _checkAnswer(AnswerOption userChoice, BuildContext context) async {
+    ///正解した時に scoreが上がる
     if (userChoice == questionBank[_currentQuestionIndex].correctAnswer) {
       _score = _score + 1;
     }
-    debugPrint("$_score");
+    ///何問目か
+    _questioncount=_questioncount+1;
+    debugPrint("Questioncounts(now)=$_questioncount");
+    ///現在の得点
+    debugPrint("Score(now)=$_score");
     await _dialogBuilder(context, userChoice);
     _nextQuestion();
   }
@@ -102,9 +110,24 @@ class _QuizAppState extends State<QuizApp> {
                 child: quizImage(answerImageURL),
               ),
               const Spacer(),
-              TextButton(onPressed: () {
-                Navigator.of(context).pop();
-              }, child: const Text("次の問題へ")),
+              Expanded(
+              child: (() { // 関数を使う
+                if (_questioncount == questionBank.length) {
+                  return TextButton(onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Quizresult(param:"$_score"),
+                      )
+                    );
+                  }, child: const Text("結果"),
+                  );
+                } else {
+                  return TextButton(onPressed: () {
+                    Navigator.of(context).pop();
+                  }, child: const Text("次の問題へ"),
+                  );
+                }
+              })(),
+              ),
             ],
           ),
         );
