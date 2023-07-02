@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/model/question.dart';
 import 'package:flutter/material.dart';
 import './quiz.dart';
 
@@ -5,10 +6,21 @@ class DifficultyListView extends StatelessWidget {
   //final List<Movie> movieList = Movie.getMovies();
 
   final List difficultyList = [
-    "初級",
-    "中級",
-    "上級",
+    Difficulty.easy,
+    Difficulty.medium,
+    Difficulty.hard,
   ];
+
+  String getDifficultyLabel(Difficulty diff) {
+    switch (diff) {
+      case Difficulty.easy:
+        return "初級";
+      case Difficulty.medium:
+        return "中級";
+      case Difficulty.hard:
+        return "上級";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +42,7 @@ class DifficultyListView extends StatelessWidget {
     );
   }
 
-  Widget movieCard(String difficulty, BuildContext context) {
+  Widget movieCard(Difficulty difficulty, BuildContext context) {
     return InkWell(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -50,8 +62,8 @@ class DifficultyListView extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      difficulty,
-                      style: TextStyle(
+                      getDifficultyLabel(difficulty),
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17.0,
                         color: Colors.white,
@@ -64,12 +76,12 @@ class DifficultyListView extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () => {
+      onTap: () async {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QuizApp(),
-            ))
+              builder: (context) => QuizApp(difficulty),
+            ));
       },
     );
   }
