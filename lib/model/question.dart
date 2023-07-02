@@ -1,6 +1,9 @@
-class Question {
-  String questionText;
-  bool isCorrect;
+enum AnswerOption { A, B, C, D }
 
-  Question.name(this.questionText, this.isCorrect);
+class Question {
+  AnswerOption correctAnswer;
+  String problemImageURL;
+  String answerImageURL;
+
+  Question.name(this.correctAnswer, this.problemImageURL, this.answerImageURL);
 }
